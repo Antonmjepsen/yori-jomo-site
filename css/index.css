@@ -1,0 +1,369 @@
+/* Referencebredde i screenshot: ca. 908px. Mål er omregnet til vw, så layoutet skalerer 1:1. */
+:root {
+  --bg: #f1f1f1;
+  --text: #111;
+  --olive: #95913f;
+  --footer-text: #f1f1f1;
+  --sans: "DM Sans", Arial, sans-serif;
+  --serif: "Libre Caslon Text", Georgia, "Times New Roman", serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  height: 65vw; /* 590 / 908 */
+  background: #7d7d7d url("images/hero.jpg") center / cover no-repeat;
+  color: #fff;
+}
+
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 21px;
+}
+.nav__logo {
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-right: 29px;
+}
+.nav__links {
+  display: flex;
+  gap: 26px;
+}
+.nav__links a {
+  font-size: 14.5px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.nav__icons {
+  margin-left: auto;
+  margin-right: 43px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  opacity: 0.85;
+}
+.nav__icons a {
+  display: flex;
+}
+
+.hero__content {
+  position: absolute;
+  left: 21px;
+  bottom: 62px;
+  max-width: 300px;
+}
+.hero__text {
+  font-size: 16.5px;
+  line-height: 22px;
+  font-weight: 400;
+  margin-bottom: 19px;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  font-family: var(--sans);
+  font-size: 13px;
+  text-transform: uppercase;
+  border-radius: 2px;
+}
+.btn--light {
+  background: #f1f1f1;
+  color: #111;
+  width: 130px;
+  height: 38px;
+  font-size: 15px;
+  border-radius: 4px;
+}
+.btn--outline {
+  border: 1px solid #111;
+  width: 144px;
+  height: 30px;
+  background: transparent;
+  color: #111;
+}
+
+/* ---------- PRODUKTER ---------- */
+.products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.products--shoes {
+  padding-top: 196px;
+}
+.products--belts {
+  padding-top: 160px;
+  padding-bottom: 36px;
+}
+
+.product {
+  display: block;
+}
+.product__img {
+  aspect-ratio: 1 / 1;
+  padding: 0 20px;
+}
+.product__img img {
+  object-fit: contain;
+}
+.product h3,
+.product p {
+  font-size: 11.5px;
+  font-weight: 400;
+  line-height: 15px;
+  padding-left: 10px;
+}
+.product h3 {
+  margin-top: 0;
+}
+.products--shoes .product h3 {
+  margin-top: -14px;
+}
+.products--belts .product h3 {
+  margin-top: -62px;
+}
+.products--shoes {
+  padding-bottom: 38px;
+}
+
+/* ---------- SPLIT SECTIONS ---------- */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 45.4vw; /* 413 / 908 */
+}
+.split__image {
+  overflow: hidden;
+}
+.split__image img {
+  object-fit: cover;
+}
+
+.split__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 25px;
+}
+.split__text h2 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 25px;
+  letter-spacing: 0.3px;
+  line-height: 1.1;
+  margin-bottom: 9px;
+}
+.split__text p {
+  font-size: 11.5px;
+  line-height: 15px;
+  max-width: 410px;
+  margin-bottom: 18px;
+}
+.split__text .btn {
+  align-self: flex-start;
+}
+
+#about .split__text {
+  padding-top: 56px;
+}
+#about .split__text p {
+  max-width: 410px;
+}
+
+.split--reverse {
+  margin-top: 0;
+}
+.split--reverse .split__text {
+  padding-left: 23px;
+  padding-right: 60px;
+}
+.split--reverse .split__text p {
+  max-width: 350px;
+}
+.split--reverse .split__image {
+  margin-left: 14px;
+}
+.split--reverse {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ---------- FOOTER ----------
+   Målt på Figma-framen (801px bred). 1 enhed = 1px i Figma,
+   og alt skalerer med skærmbredden via --u. */
+.footer {
+  --u: calc(100vw / 801);
+
+  position: relative;
+  background: var(--olive);
+  color: var(--footer-text);
+  margin: 45px 0 0;
+  padding: calc(18 * var(--u)) calc(16 * var(--u)) 0 calc(18 * var(--u));
+  height: calc(241 * var(--u));
+}
+.footer__logo {
+  font-size: calc(17 * var(--u));
+  line-height: 1.2;
+  font-weight: 300;
+  letter-spacing: 0;
+}
+.footer__grid {
+  display: grid;
+  grid-template-columns: calc(239 * var(--u)) calc(221 * var(--u)) 1fr;
+  align-items: start;
+  margin-top: calc(29 * var(--u));
+}
+.footer__links li {
+  font-size: calc(11.5 * var(--u));
+  font-weight: 300;
+  line-height: calc(20.4 * var(--u));
+}
+.footer__connect {
+  padding-top: calc(94 * var(--u));
+}
+.footer__connect p {
+  font-size: calc(11.5 * var(--u));
+  font-weight: 300;
+  line-height: calc(20.4 * var(--u));
+  margin-bottom: calc(4 * var(--u));
+}
+.footer__connect a {
+  display: inline-flex;
+}
+.footer__connect svg,
+.footer__connect img {
+  width: calc(18 * var(--u));
+  height: calc(18 * var(--u));
+}
+.footer__news {
+  padding-top: calc(75 * var(--u));
+}
+.footer__news label {
+  display: block;
+  font-size: calc(11.5 * var(--u));
+  font-weight: 300;
+  line-height: calc(20.4 * var(--u));
+  margin: 0 0 calc(6 * var(--u));
+}
+.footer__news input {
+  width: 100%;
+  height: calc(34 * var(--u));
+  background: transparent;
+  border: 1px solid var(--footer-text);
+  border-radius: calc(11 * var(--u));
+  padding: 0 calc(13 * var(--u));
+  font-family: var(--sans);
+  font-size: calc(11.5 * var(--u));
+  font-weight: 300;
+  color: var(--footer-text);
+  outline: none;
+}
+.footer__news input::placeholder {
+  color: rgba(241, 241, 241, 0.75);
+}
+
+.footer__copy {
+  position: absolute;
+  left: calc(18 * var(--u));
+  bottom: calc(18 * var(--u));
+  font-size: calc(7.4 * var(--u));
+  line-height: 1.3;
+}
+
+/* ---------- MOBIL ---------- */
+@media (max-width: 749px) {
+  .hero {
+    height: 120vw;
+  }
+  .nav {
+    padding: 0 16px;
+  }
+  .nav__links {
+    display: none;
+  }
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .products--shoes,
+  .products--belts {
+    padding-top: 40px;
+  }
+  .products--shoes .product h3,
+  .products--belts .product h3 {
+    margin-top: 0;
+  }
+  .split,
+  .split--reverse {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .split__image {
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+  .split--reverse .split__image {
+    order: -1;
+  }
+  .split__text,
+  .split--reverse .split__text,
+  #about .split__text {
+    padding: 40px 20px;
+  }
+
+  .footer {
+    --u: 1.5px;
+    margin: 45px 0 0;
+    padding: 24px 20px 56px;
+    height: auto;
+  }
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .footer__connect,
+  .footer__news {
+    padding-top: 0;
+  }
+  .footer__copy {
+    left: 20px;
+    bottom: 20px;
+  }
+}
