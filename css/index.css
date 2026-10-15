@@ -1,11 +1,78 @@
-/* Referencebredde i screenshot: ca. 908px. Mål er omregnet til vw, så layoutet skalerer 1:1. */
+/* ==========================================================
+   Yori Jomo
+
+   SKALERING
+   --u er den enhed, alle mål er regnet i (1u = 1px i Figma-framen på 908px).
+
+   - Desktop (over 908px):  --u = skærmbredde / 908, op til 1440px. Layoutet
+                            skalerer fladt med skærmen og centreres derefter.
+   - Tablet (750-908px):    --u = 1px. Samme layout som Figma, men tekst og
+                            knapper bliver ikke mindre end i designet.
+   - Mobil (under 750px):   eget stablet layout. Her er --u skærmbredde / 390,
+                            begrænset til 0.9px-1.5px, så alt (tekst, knapper,
+                            afstande) skalerer sammen fra små telefoner til
+                            store telefoner og små tablets.
+   ========================================================== */
+
+/* ---------- FONTE ----------
+   Filerne ligger i mappen "fonte" ved siden af css-mappen. */
+@font-face {
+  font-family: "Abhaya Libre";
+  src: url("../fonte/AbhayaLibre-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fustat";
+  src: url("../fonte/Fustat-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fustat";
+  src: url("../fonte/Fustat-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fustat";
+  src: url("../fonte/Fustat-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fustat";
+  src: url("../fonte/Fustat-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Marble";
+  src: url("../fonte/Marble Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg: #f1f1f1;
   --text: #111;
   --olive: #95913f;
   --footer-text: #f1f1f1;
-  --sans: "DM Sans", Arial, sans-serif;
-  --serif: "Libre Caslon Text", Georgia, "Times New Roman", serif;
+  --sans: "Fustat", Arial, sans-serif;
+  --serif: "Abhaya Libre", Georgia, "Times New Roman", serif;
+  --logo: "Marble", "Fustat", Arial, sans-serif;
+
+  --max: 1440px;
+  /* Aldrig under 1px (tablet) og aldrig over 1440px-bredden (store skærme) */
+  --u: calc(max(908px, min(100vw, var(--max))) / 908);
+  /* Sidemargin der centrerer indholdet, når skærmen er bredere end --max */
+  --gutter: max(0px, calc((100% - var(--max)) / 2));
 }
 
 *,
@@ -16,11 +83,17 @@
   padding: 0;
 }
 
+html {
+  background: var(--bg);
+}
+
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
+  font-weight: 400; /* Fustat Regular */
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 a {
@@ -40,8 +113,20 @@ img {
 /* ---------- HERO ---------- */
 .hero {
   position: relative;
-  height: 65vw; /* 590 / 908 */
-  background: #7d7d7d url("images/hero.jpg") center / cover no-repeat;
+  /* 590 / 908 = højde/bredde-forhold fra Figma. Hero'en bliver dog aldrig
+     højere end skærmen, så teksten og knappen altid er synlige.
+
+     Billedets lodrette placering regnes ud, så der bliver vist så meget af
+     kvindens ben som muligt, uden at venstre sko kommer bag teksten:
+       - billedet er 65vw højt, og venstre sko slutter ca. 42,9vw fra toppen
+       - teksten og knappen fylder ca. 175 enheder nede fra bunden
+       - billedet skubbes kun op (beskæres i toppen) så meget som nødvendigt */
+  height: min(65vw, 100vh);
+  background-color: #7d7d7d;
+  background-image: url("../Billeder/hero.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center calc(0px - max(0px, 42.9vw + 175 * var(--u) - min(65vw, 100vh)));
   color: #fff;
 }
 
@@ -50,126 +135,167 @@ img {
   top: 0;
   left: 0;
   right: 0;
-  height: 80px;
+  height: calc(80 * var(--u));
   display: flex;
   align-items: center;
-  padding: 0 21px;
+  padding: 0 calc(21 * var(--u));
 }
 .nav__logo {
-  font-size: 24px;
-  font-weight: 300;
-  letter-spacing: 0.5px;
-  margin-right: 29px;
+  font-family: var(--logo); /* Marble Thin */
+  font-size: calc(24 * var(--u));
+  font-weight: 100;
+  letter-spacing: 0.02em;
+  margin-right: calc(29 * var(--u));
 }
 .nav__links {
   display: flex;
-  gap: 26px;
+  gap: calc(26 * var(--u));
 }
 .nav__links a {
-  font-size: 14.5px;
-  font-weight: 400;
+  font-size: calc(14.5 * var(--u));
+  font-weight: 400; /* Fustat Regular */
   text-transform: uppercase;
 }
 .nav__icons {
   margin-left: auto;
-  margin-right: 43px;
+  margin-right: 0;
   display: flex;
-  gap: 8px;
+  gap: calc(14 * var(--u));
   align-items: center;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 .nav__icons a {
   display: flex;
 }
+.nav__icons svg {
+  width: calc(22 * var(--u));
+  height: calc(22 * var(--u));
+}
 
 .hero__content {
   position: absolute;
-  left: 21px;
-  bottom: 62px;
-  max-width: 300px;
+  left: calc(21 * var(--u));
+  bottom: calc(62 * var(--u));
+  max-width: calc(300 * var(--u));
 }
 .hero__text {
-  font-size: 16.5px;
-  line-height: 22px;
-  font-weight: 400;
-  margin-bottom: 19px;
+  font-size: calc(16.5 * var(--u));
+  line-height: calc(22 * var(--u));
+  font-weight: 500; /* Fustat Medium */
+  margin-bottom: calc(19 * var(--u));
 }
 
-/* ---------- BUTTONS ---------- */
+/* ---------- BUTTONS (alle CTA: Fustat SemiBold) ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 38px;
+  height: calc(30 * var(--u));
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: calc(11.5 * var(--u));
+  font-weight: 600;
   text-transform: uppercase;
-  border-radius: 2px;
+  border-radius: calc(2 * var(--u));
 }
 .btn--light {
   background: #f1f1f1;
   color: #111;
-  width: 130px;
-  height: 38px;
-  font-size: 15px;
-  border-radius: 4px;
+  width: calc(130 * var(--u));
+  height: calc(38 * var(--u));
+  font-size: calc(15 * var(--u));
+  border-radius: calc(4 * var(--u));
 }
 .btn--outline {
   border: 1px solid #111;
-  width: 144px;
-  height: 30px;
+  width: calc(271 * var(--u));
   background: transparent;
   color: #111;
 }
+.btn--explore {
+  width: calc(188 * var(--u));
+}
 
 /* ---------- PRODUKTER ---------- */
+.products,
+.split {
+  max-width: var(--max);
+  margin-left: auto;
+  margin-right: auto;
+}
 .products {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
 .products--shoes {
-  padding-top: 196px;
+  padding-top: calc(163 * var(--u));
 }
 .products--belts {
-  padding-top: 160px;
-  padding-bottom: 36px;
+  padding-top: calc(165 * var(--u));
+  padding-bottom: calc(42 * var(--u));
 }
 
 .product {
   display: block;
 }
 .product__img {
-  aspect-ratio: 1 / 1;
-  padding: 0 20px;
+  height: calc(70 * var(--u));
+  padding: 0 calc(9 * var(--u));
 }
 .product__img img {
   object-fit: contain;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
+/* Hover: skoen/bæltet løftes lidt og får en blød skygge under sig.
+   Navn og pris står stille. Kun for mus (ikke touch) og tastatur-fokus. */
+@media (hover: hover) and (pointer: fine) {
+  .product:hover .product__img img {
+    transform: translateY(-6px) scale(1.03);
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.16));
+  }
+}
+.product:focus-visible .product__img img {
+  transform: translateY(-6px) scale(1.03);
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.16));
+}
+.product:focus-visible {
+  outline: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .product__img img {
+    transition: none;
+  }
+  .product:hover .product__img img,
+  .product:focus-visible .product__img img {
+    transform: none;
+  }
+}
+/* Produktnavn og pris: Fustat SemiBold */
 .product h3,
 .product p {
-  font-size: 11.5px;
-  font-weight: 400;
-  line-height: 15px;
-  padding-left: 10px;
+  font-size: calc(11.5 * var(--u));
+  font-weight: 600;
+  line-height: calc(15 * var(--u));
+  padding-left: calc(7 * var(--u));
 }
 .product h3 {
-  margin-top: 0;
+  margin-top: calc(57 * var(--u));
 }
-.products--shoes .product h3 {
-  margin-top: -14px;
-}
-.products--belts .product h3 {
-  margin-top: -62px;
-}
-.products--shoes {
-  padding-bottom: 38px;
+
+/* "Explore collection" under skoene */
+.products-cta {
+  display: flex;
+  justify-content: center;
+  max-width: var(--max);
+  margin: calc(44 * var(--u)) auto calc(36 * var(--u));
 }
 
 /* ---------- SPLIT SECTIONS ---------- */
 .split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 45.4vw; /* 413 / 908 */
+  height: calc(413 * var(--u));
 }
 .split__image {
   overflow: hidden;
@@ -178,158 +304,241 @@ img {
   object-fit: cover;
 }
 
+/* Overskrift, tekst og knap ligger som én enhed i bunden af sektionen,
+   så knappen ender på linje med billedets underkant. */
 .split__text {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 0 25px;
+  justify-content: flex-end;
+  padding: 0 calc(25 * var(--u));
 }
+/* Overskrifter: Abhaya Libre Bold */
 .split__text h2 {
   font-family: var(--serif);
   font-weight: 700;
-  font-size: 25px;
-  letter-spacing: 0.3px;
+  font-size: calc(30 * var(--u));
+  letter-spacing: 0;
   line-height: 1.1;
-  margin-bottom: 9px;
+  margin-bottom: calc(16 * var(--u));
 }
+/* Brødtekst: Fustat SemiBold */
 .split__text p {
-  font-size: 11.5px;
-  line-height: 15px;
-  max-width: 410px;
-  margin-bottom: 18px;
+  font-size: calc(13 * var(--u));
+  font-weight: 600;
+  line-height: calc(18.4 * var(--u));
+  max-width: calc(275 * var(--u));
+  margin-bottom: calc(17 * var(--u));
 }
 .split__text .btn {
   align-self: flex-start;
 }
 
-#about .split__text {
-  padding-top: 56px;
-}
-#about .split__text p {
-  max-width: 410px;
-}
-
-.split--reverse {
-  margin-top: 0;
-}
 .split--reverse .split__text {
-  padding-left: 23px;
-  padding-right: 60px;
+  padding-left: calc(24 * var(--u));
+  padding-right: calc(24 * var(--u));
 }
 .split--reverse .split__text p {
-  max-width: 350px;
+  max-width: calc(271 * var(--u));
+  margin-bottom: calc(18 * var(--u));
 }
 .split--reverse .split__image {
-  margin-left: 14px;
-}
-.split--reverse {
-  grid-template-columns: 1fr 1fr;
+  margin-left: calc(14 * var(--u));
 }
 
-/* ---------- FOOTER ----------
-   Målt på Figma-framen (801px bred). 1 enhed = 1px i Figma,
-   og alt skalerer med skærmbredden via --u. */
+/* ---------- FOOTER ---------- */
 .footer {
-  --u: calc(100vw / 801);
-
   position: relative;
   background: var(--olive);
   color: var(--footer-text);
-  margin: 45px 0 0;
-  padding: calc(18 * var(--u)) calc(16 * var(--u)) 0 calc(18 * var(--u));
-  height: calc(241 * var(--u));
+  margin: calc(37 * var(--u)) 0 calc(28 * var(--u));
+  padding: calc(20 * var(--u)) calc(var(--gutter) + 22 * var(--u)) 0;
+  height: calc(301 * var(--u));
 }
 .footer__logo {
-  font-size: calc(17 * var(--u));
-  line-height: 1.2;
-  font-weight: 300;
-  letter-spacing: 0;
+  font-family: var(--logo); /* Marble Thin */
+  font-size: calc(25 * var(--u));
+  line-height: calc(30 * var(--u));
+  font-weight: 100;
 }
+/* 299 : 277 : 288 = Figma-kolonnerne. fr gør, at de følger bredden. */
 .footer__grid {
   display: grid;
-  grid-template-columns: calc(239 * var(--u)) calc(221 * var(--u)) 1fr;
+  grid-template-columns: 299fr 277fr 288fr;
   align-items: start;
-  margin-top: calc(29 * var(--u));
+  margin-top: calc(35 * var(--u));
 }
+/* Footer-links, "Connect with us" og nyhedsbrevs-label: Fustat Regular */
 .footer__links li {
-  font-size: calc(11.5 * var(--u));
-  font-weight: 300;
-  line-height: calc(20.4 * var(--u));
+  font-size: calc(17.5 * var(--u));
+  font-weight: 400;
+  line-height: calc(25.5 * var(--u));
 }
 .footer__connect {
-  padding-top: calc(94 * var(--u));
+  padding-top: calc(96 * var(--u));
 }
 .footer__connect p {
-  font-size: calc(11.5 * var(--u));
-  font-weight: 300;
-  line-height: calc(20.4 * var(--u));
-  margin-bottom: calc(4 * var(--u));
+  font-size: calc(17.5 * var(--u));
+  font-weight: 400;
+  line-height: calc(24 * var(--u));
+  margin-bottom: calc(5 * var(--u));
 }
 .footer__connect a {
   display: inline-flex;
 }
-.footer__connect svg,
-.footer__connect img {
-  width: calc(18 * var(--u));
-  height: calc(18 * var(--u));
+.footer__connect svg {
+  width: calc(22 * var(--u));
+  height: calc(22 * var(--u));
 }
 .footer__news {
-  padding-top: calc(75 * var(--u));
+  padding-top: calc(72 * var(--u));
 }
 .footer__news label {
   display: block;
-  font-size: calc(11.5 * var(--u));
-  font-weight: 300;
-  line-height: calc(20.4 * var(--u));
-  margin: 0 0 calc(6 * var(--u));
+  font-size: calc(17.5 * var(--u));
+  font-weight: 400;
+  line-height: calc(24 * var(--u));
+  margin: 0 0 calc(9 * var(--u));
 }
+/* "your email": Fustat Light */
 .footer__news input {
   width: 100%;
-  height: calc(34 * var(--u));
+  height: calc(42 * var(--u));
   background: transparent;
   border: 1px solid var(--footer-text);
-  border-radius: calc(11 * var(--u));
-  padding: 0 calc(13 * var(--u));
+  border-radius: calc(12 * var(--u));
+  padding: 0 calc(16 * var(--u));
   font-family: var(--sans);
-  font-size: calc(11.5 * var(--u));
+  font-size: calc(17.5 * var(--u));
   font-weight: 300;
   color: var(--footer-text);
   outline: none;
 }
 .footer__news input::placeholder {
   color: rgba(241, 241, 241, 0.75);
+  font-family: var(--sans);
+  font-weight: 300;
 }
 
 .footer__copy {
   position: absolute;
-  left: calc(18 * var(--u));
-  bottom: calc(18 * var(--u));
-  font-size: calc(7.4 * var(--u));
-  line-height: 1.3;
+  left: calc(var(--gutter) + 22 * var(--u));
+  bottom: calc(20 * var(--u));
+  font-size: calc(11.5 * var(--u));
+  line-height: calc(15 * var(--u));
 }
 
-/* ---------- MOBIL ---------- */
+/* ==========================================================
+   TABLET (750px - 908px)
+   Samme layout som Figma. --u er 1px, men kolonnerne i footeren
+   er smallere end i designet, så skriften her er en anelse mindre.
+   ========================================================== */
+@media (min-width: 750px) and (max-width: 908px) {
+  .footer__links li,
+  .footer__connect p,
+  .footer__news label,
+  .footer__news input {
+    font-size: 15px;
+  }
+}
+
+/* ==========================================================
+   MOBIL (under 750px)
+   Egen stablet opsætning. Alle mål er i --u, som her er
+   skærmbredde / 390 (mellem 0.9px og 1.5px), så tekst, knapper
+   og afstande skalerer sammen. 1u svarer til 1px på en 390px telefon.
+   ========================================================== */
 @media (max-width: 749px) {
+  :root {
+    --u: clamp(0.9px, calc(100vw / 390), 1.5px);
+  }
+
+  /* Hero: stående format. Billedet er beregnet til liggende, så det
+     forankres til venstre, hvor venstre ben og sko er, og toppen af
+     tekstblokken holdes frit af skoen. */
   .hero {
-    height: 120vw;
+    height: clamp(430px, 125vw, 100vh);
+    background-position: 25% center;
   }
   .nav {
-    padding: 0 16px;
+    height: calc(64 * var(--u));
+    padding: 0 calc(20 * var(--u));
+  }
+  .nav__logo {
+    font-size: calc(21 * var(--u));
+    margin-right: 0;
   }
   .nav__links {
     display: none;
   }
+  .nav__icons {
+    gap: calc(14 * var(--u));
+  }
+  .nav__icons svg {
+    width: calc(22 * var(--u));
+    height: calc(22 * var(--u));
+  }
+  .hero__content {
+    left: calc(20 * var(--u));
+    bottom: calc(28 * var(--u));
+    max-width: calc(300 * var(--u));
+  }
+  .hero__text {
+    font-size: calc(15 * var(--u));
+    line-height: calc(21 * var(--u));
+    margin-bottom: calc(16 * var(--u));
+  }
+
+  /* Knapper */
+  .btn {
+    height: calc(44 * var(--u));
+    font-size: calc(13 * var(--u));
+    border-radius: calc(3 * var(--u));
+  }
+  .btn--light {
+    width: calc(140 * var(--u));
+    height: calc(42 * var(--u));
+    font-size: calc(14 * var(--u));
+    border-radius: calc(4 * var(--u));
+  }
+  .btn--outline {
+    width: 100%;
+    max-width: calc(320 * var(--u));
+  }
+  .btn--outline.btn--explore {
+    width: calc(220 * var(--u));
+  }
+
+  /* Produkter: 2 kolonner */
   .products {
     grid-template-columns: repeat(2, 1fr);
+    row-gap: calc(30 * var(--u));
   }
-  .products--shoes,
+  .products--shoes {
+    padding-top: calc(48 * var(--u));
+  }
   .products--belts {
-    padding-top: 40px;
+    padding-top: calc(44 * var(--u));
+    padding-bottom: calc(44 * var(--u));
   }
-  .products--shoes .product h3,
-  .products--belts .product h3 {
-    margin-top: 0;
+  .product__img {
+    height: auto;
+    aspect-ratio: 3 / 1;
+    padding: 0 calc(12 * var(--u));
   }
+  .product h3 {
+    margin-top: calc(12 * var(--u));
+  }
+  .product h3,
+  .product p {
+    font-size: calc(13 * var(--u));
+    line-height: calc(17 * var(--u));
+    padding-left: calc(12 * var(--u));
+  }
+  .products-cta {
+    margin: calc(36 * var(--u)) auto calc(40 * var(--u));
+  }
+
+  /* About us og Retailers: billede øverst, tekst under */
   .split,
   .split--reverse {
     grid-template-columns: 1fr;
@@ -343,27 +552,303 @@ img {
     order: -1;
   }
   .split__text,
-  .split--reverse .split__text,
-  #about .split__text {
-    padding: 40px 20px;
+  .split--reverse .split__text {
+    justify-content: flex-start;
+    padding: calc(40 * var(--u)) calc(20 * var(--u));
+  }
+  .split__text h2 {
+    font-size: calc(30 * var(--u));
+    margin-bottom: calc(14 * var(--u));
+  }
+  .split__text p,
+  .split--reverse .split__text p {
+    font-size: calc(14 * var(--u));
+    line-height: calc(21 * var(--u));
+    max-width: calc(340 * var(--u));
+    margin-bottom: calc(22 * var(--u));
+  }
+  .split__text .btn {
+    align-self: stretch;
+    width: 100%;
+    max-width: calc(340 * var(--u));
   }
 
+  /* Footer: alt stables */
   .footer {
-    --u: 1.5px;
-    margin: 45px 0 0;
-    padding: 24px 20px 56px;
+    margin: 0;
+    padding: calc(32 * var(--u)) calc(20 * var(--u)) calc(28 * var(--u));
     height: auto;
+  }
+  .footer__logo {
+    font-size: calc(26 * var(--u));
+    line-height: calc(32 * var(--u));
   }
   .footer__grid {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: calc(32 * var(--u));
+    margin-top: calc(28 * var(--u));
+  }
+  .footer__links li {
+    font-size: calc(16 * var(--u));
+    line-height: calc(28 * var(--u));
   }
   .footer__connect,
   .footer__news {
     padding-top: 0;
   }
+  .footer__connect p {
+    font-size: calc(16 * var(--u));
+    line-height: calc(24 * var(--u));
+    margin-bottom: calc(8 * var(--u));
+  }
+  .footer__connect svg {
+    width: calc(24 * var(--u));
+    height: calc(24 * var(--u));
+  }
+  .footer__news label {
+    font-size: calc(16 * var(--u));
+    line-height: calc(24 * var(--u));
+    margin-bottom: calc(10 * var(--u));
+  }
+  .footer__news input {
+    height: calc(46 * var(--u));
+    border-radius: calc(12 * var(--u));
+    padding: 0 calc(16 * var(--u));
+    font-size: max(16px, calc(16 * var(--u))); /* 16px forhindrer zoom i iOS */
+  }
   .footer__copy {
-    left: 20px;
-    bottom: 20px;
+    position: static;
+    margin-top: calc(32 * var(--u));
+    font-size: calc(12 * var(--u));
+    line-height: calc(16 * var(--u));
+  }
+}
+
+/* ==========================================================
+   NYHEDSBREVS-POPUP
+   Åbnes af js/index.js 2 sekunder efter sidens åbning.
+   Baggrunden sløres, og boksen fades ind.
+   ========================================================== */
+.modal-open {
+  overflow: hidden;
+}
+
+.newsletter-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(17, 17, 17, 0.28);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+
+  /* skjult som udgangspunkt */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.6s ease,
+    visibility 0s linear 0.6s;
+}
+.newsletter-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 0.6s ease,
+    visibility 0s;
+}
+
+.newsletter-modal__card {
+  /* Figma-boksen er 900 x 312 med en indholdskolonne på 505.
+     --m er "1 Figma-px" ved boksens aktuelle bredde, så alt inde i boksen
+     (tekst, felter, afstande) skalerer proportionalt med den. */
+  --w: min(calc(640 * var(--u)), calc(100vw - 32px));
+  --m: calc(var(--w) / 900);
+
+  position: relative;
+  width: var(--w);
+  padding: calc(31 * var(--m)) calc(198 * var(--m)) calc(36 * var(--m));
+  background: #fff;
+  color: var(--text);
+  border: 1px solid #dcdcdc;
+  border-radius: calc(8 * var(--m));
+  box-shadow:
+    0 calc(10 * var(--m)) 0 #b9b9b9,
+    0 calc(16 * var(--m)) calc(36 * var(--m)) rgba(0, 0, 0, 0.14);
+  outline: none;
+  transform: translateY(calc(14 * var(--u)));
+  transition: transform 0.6s ease;
+}
+.newsletter-modal.is-open .newsletter-modal__card {
+  transform: translateY(0);
+}
+
+.newsletter-modal__title {
+  font-family: var(--sans);
+  font-weight: 300; /* Fustat Light */
+  font-size: calc(38 * var(--m));
+  line-height: calc(44 * var(--m));
+  margin-bottom: calc(15 * var(--m));
+  white-space: nowrap;
+}
+.newsletter-modal__form label {
+  display: block;
+  font-size: calc(30 * var(--m));
+  line-height: calc(34 * var(--m));
+  font-weight: 400; /* Fustat Regular */
+  margin-bottom: calc(11 * var(--m));
+}
+.newsletter-modal__form input {
+  width: 100%;
+  height: calc(76 * var(--m));
+  padding: 0 calc(27 * var(--m));
+  background: #fff;
+  border: 1px solid #bdbdbd;
+  border-radius: calc(22 * var(--m));
+  font-family: var(--sans);
+  font-weight: 300; /* Fustat Light */
+  font-size: calc(32 * var(--m));
+  color: var(--text);
+  outline: none;
+}
+.newsletter-modal__form input::placeholder {
+  color: #8d8d8d;
+  font-family: var(--sans);
+  font-weight: 300;
+}
+.newsletter-modal__form input:focus {
+  border-color: var(--olive);
+  box-shadow: 0 0 0 2px rgba(149, 145, 63, 0.25);
+}
+.newsletter-modal__submit {
+  display: block;
+  width: 100%;
+  height: calc(44 * var(--m));
+  margin-top: calc(21 * var(--m));
+  background: var(--olive);
+  border: 1px solid #7f7b34;
+  border-radius: calc(8 * var(--m));
+  font-family: var(--sans);
+  font-weight: 300; /* Fustat Light */
+  font-size: calc(26 * var(--m));
+  color: var(--footer-text);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.newsletter-modal__submit:hover {
+  background: #868236;
+}
+.newsletter-modal__submit:focus-visible,
+.newsletter-modal__close:focus-visible {
+  outline: 2px solid var(--olive);
+  outline-offset: 2px;
+}
+
+/* Krydset */
+.newsletter-modal__close {
+  position: absolute;
+  top: calc(20 * var(--m));
+  right: calc(20 * var(--m));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max(32px, calc(44 * var(--m)));
+  height: max(32px, calc(44 * var(--m)));
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.newsletter-modal__close:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+.newsletter-modal__close svg {
+  width: max(20px, calc(28 * var(--m)));
+  height: max(20px, calc(28 * var(--m)));
+}
+
+/* Mobil: samme opbygning, men i faste størrelser der kan læses på en telefon
+   (boksen er næsten lige så bred som skærmen). */
+@media (max-width: 749px) {
+  .newsletter-modal__card {
+    --w: min(calc(100vw - 32px), 460px);
+    padding: calc(56 * var(--u)) calc(24 * var(--u)) calc(28 * var(--u));
+    border-radius: calc(8 * var(--u));
+    box-shadow:
+      0 calc(5 * var(--u)) 0 #b9b9b9,
+      0 calc(10 * var(--u)) calc(24 * var(--u)) rgba(0, 0, 0, 0.16);
+  }
+  .newsletter-modal__title {
+    font-size: calc(24 * var(--u));
+    line-height: calc(30 * var(--u));
+    margin-bottom: calc(18 * var(--u));
+    white-space: normal;
+  }
+  .newsletter-modal__form label {
+    font-size: calc(17 * var(--u));
+    line-height: calc(22 * var(--u));
+    margin-bottom: calc(8 * var(--u));
+  }
+  .newsletter-modal__form input {
+    height: calc(52 * var(--u));
+    padding: 0 calc(18 * var(--u));
+    border-radius: calc(16 * var(--u));
+    font-size: max(16px, calc(17 * var(--u))); /* 16px forhindrer zoom i iOS */
+  }
+  .newsletter-modal__submit {
+    height: calc(46 * var(--u));
+    margin-top: calc(16 * var(--u));
+    border-radius: calc(8 * var(--u));
+    font-size: max(16px, calc(17 * var(--u)));
+  }
+  .newsletter-modal__close {
+    top: calc(12 * var(--u));
+    right: calc(12 * var(--u));
+    width: max(40px, calc(40 * var(--u)));
+    height: max(40px, calc(40 * var(--u)));
+  }
+  .newsletter-modal__close svg {
+    width: calc(24 * var(--u));
+    height: calc(24 * var(--u));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .newsletter-modal,
+  .newsletter-modal.is-open,
+  .newsletter-modal__card {
+    transition: none;
+  }
+}
+
+/* ==========================================================
+   SCROLL-REVEAL
+   Klasserne sættes af js/index.js. Uden JavaScript (eller med
+   "reducer bevægelse" slået til) vises alt som normalt.
+   ========================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
