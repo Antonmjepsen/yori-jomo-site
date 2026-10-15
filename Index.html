@@ -5,11 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Yori Jomo</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Libre+Caslon+Text:wght@700&display=swap"
-    rel="stylesheet">
   <link rel="stylesheet" href="css/index.css">
 </head>
 
@@ -58,31 +53,35 @@
     <!-- SKO -->
     <section class="products products--shoes">
       <a href="#" class="product">
-        <div class="product__img"><img src="images/mary-jane-flats.png" alt="Mary jane flats"></div>
+        <div class="product__img"><img src="Billeder/sko2.png" alt="Mary jane flats"></div>
         <h3>Mary jane flats</h3>
         <p>950 kr.</p>
       </a>
       <a href="#" class="product">
-        <div class="product__img"><img src="images/alba-merlot.png" alt="ALBA loafers nappa merlot"></div>
+        <div class="product__img"><img src="Billeder/sko1.png" alt="ALBA loafers nappa merlot"></div>
         <h3>ALBA loafers nappa merlot</h3>
         <p>2,200.00 kr.</p>
       </a>
       <a href="#" class="product">
-        <div class="product__img"><img src="images/mary-jane-stripe.png" alt="Mary Jane Flats Offwhite Stripe">
+        <div class="product__img"><img src="Billeder/sko3.png" alt="Mary Jane Flats Offwhite Stripe">
         </div>
         <h3>Mary Jane Flats Offwhite Stripe</h3>
         <p>2,200.00 kr.</p>
       </a>
       <a href="#" class="product">
-        <div class="product__img"><img src="images/alba-black.png" alt="ALBA loafers nappa black"></div>
+        <div class="product__img"><img src="Billeder/sko4.png" alt="ALBA loafers nappa black"></div>
         <h3>ALBA loafers nappa black</h3>
         <p>2,200.00 kr.</p>
       </a>
     </section>
 
+    <div class="products-cta">
+      <a href="#" class="btn btn--outline btn--explore">EXPLORE COLLECTION</a>
+    </div>
+
     <!-- ABOUT US -->
     <section class="split" id="about">
-      <div class="split__image"><img src="images/about.jpg" alt=""></div>
+      <div class="split__image"><img src="Billeder/aboutus.png" alt=""></div>
       <div class="split__text">
         <h2>ABOUT US</h2>
         <p>Yori Jomo is a Copenhagen-based footwear brand, producing in Italy with a focus on craftsmanship,
@@ -96,22 +95,22 @@
     <!-- BÆLTER -->
     <section class="products products--belts">
       <a href="#" class="product">
-        <div class="product__img"><img src="images/belt-pony-brown.png" alt="Western Belt - Cavallino Pony Brown"></div>
+        <div class="product__img"><img src="Billeder/baelte3.png" alt="Western Belt - Cavallino Pony Brown"></div>
         <h3>Western Belt - Cavallino Pony Brown</h3>
         <p>750 kr.</p>
       </a>
       <a href="#" class="product">
-        <div class="product__img"><img src="images/belt-croco-brown.png" alt="Classic Belt - Croco Brown"></div>
+        <div class="product__img"><img src="Billeder/baelte2.png" alt="Classic Belt - Croco Brown"></div>
         <h3>Classic Belt - Croco Brown</h3>
         <p>750 kr.</p>
       </a>
       <a href="#" class="product">
-        <div class="product__img"><img src="images/belt-zebra.png" alt="Western Belt - Cavallino Zebra"></div>
+        <div class="product__img"><img src="Billeder/baelte1.png" alt="Western Belt - Cavallino Zebra"></div>
         <h3>Western Belt - Cavallino Zebra</h3>
         <p>750 kr.</p>
       </a>
       <a href="#" class="product">
-        <div class="product__img"><img src="images/belt-croco-black.png" alt="Western Belt - Croco Black"></div>
+        <div class="product__img"><img src="Billeder/baelte4.png" alt="Western Belt - Croco Black"></div>
         <h3>Western Belt - Croco Black</h3>
         <p>750 kr.</p>
       </a>
@@ -127,7 +126,7 @@
           the refined details and timeless styles that define Yori Jomo.</p>
         <a href="#" class="btn btn--outline">READ MORE</a>
       </div>
-      <div class="split__image"><img src="images/retailers.jpg" alt=""></div>
+      <div class="split__image"><img src="Billeder/retailers.png" alt=""></div>
     </section>
   </main>
 
@@ -160,6 +159,27 @@
     </div>
     <p class="footer__copy">© 2026 Yori Jomo</p>
   </footer>
+
+  <!-- NYHEDSBREVS-POPUP (vises 2 sekunder efter sidens åbning, se js/index.js) -->
+  <div class="newsletter-modal" id="newsletter-modal" aria-hidden="true">
+    <div class="newsletter-modal__card" role="dialog" aria-modal="true" aria-labelledby="newsletter-title"
+      tabindex="-1">
+      <button type="button" class="newsletter-modal__close" aria-label="Luk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+          aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+      <h2 class="newsletter-modal__title" id="newsletter-title">Subscribe to our newsletter</h2>
+      <form class="newsletter-modal__form">
+        <label for="modal-email">Email</label>
+        <input id="modal-email" type="email" placeholder="Ex. youremail@gmail.com" required>
+        <button type="submit" class="newsletter-modal__submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="css/index.js" defer></script>
 
 </body>
 
