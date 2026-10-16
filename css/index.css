@@ -231,9 +231,12 @@ img {
 .products--shoes .product {
   padding-top: calc(163 * var(--u));
 }
+.products--shoes {
+  padding-bottom: calc(80 * var(--u));
+}
 .products--belts {
   padding-top: calc(165 * var(--u));
-  padding-bottom: calc(42 * var(--u));
+  padding-bottom: calc(44 * var(--u));
 }
 
 .product {
@@ -297,7 +300,7 @@ img {
   display: flex;
   justify-content: center;
   max-width: var(--max);
-  margin: calc(44 * var(--u)) auto calc(36 * var(--u));
+  margin: 0 auto calc(44 * var(--u));
 }
 
 /* ---------- SPLIT SECTIONS ---------- */
@@ -519,6 +522,7 @@ img {
   }
   .products--shoes {
     padding-top: calc(48 * var(--u));
+    padding-bottom: calc(40 * var(--u));
   }
   .products--shoes .product {
     padding-top: 0;
@@ -546,7 +550,7 @@ img {
     padding-left: calc(12 * var(--u));
   }
   .products-cta {
-    margin: calc(36 * var(--u)) auto calc(40 * var(--u));
+    margin: 0 auto calc(40 * var(--u));
   }
 
   /* About us og Retailers: billede øverst, tekst under */
