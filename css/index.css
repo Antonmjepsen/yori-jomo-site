@@ -676,22 +676,20 @@ img {
 }
 
 .newsletter-modal__card {
-  /* Figma-boksen er 900 x 312 med en indholdskolonne på 505.
+  /* Figma-boksen er 712 x 417: billede til venstre (296) og indhold til højre (416).
      --m er "1 Figma-px" ved boksens aktuelle bredde, så alt inde i boksen
      (tekst, felter, afstande) skalerer proportionalt med den. */
   --w: min(calc(640 * var(--u)), calc(100vw - 32px));
-  --m: calc(var(--w) / 900);
+  --m: calc(var(--w) / 712);
 
   position: relative;
+  display: grid;
+  grid-template-columns: 296fr 416fr;
   width: var(--w);
-  padding: calc(31 * var(--m)) calc(198 * var(--m)) calc(36 * var(--m));
-  background: #fff;
+  aspect-ratio: 712 / 417;
+  background: #f1f1f1;
   color: var(--text);
-  border: 1px solid #dcdcdc;
-  border-radius: calc(8 * var(--m));
-  box-shadow:
-    0 calc(10 * var(--m)) 0 #b9b9b9,
-    0 calc(16 * var(--m)) calc(36 * var(--m)) rgba(0, 0, 0, 0.14);
+  box-shadow: 0 calc(16 * var(--m)) calc(40 * var(--m)) rgba(0, 0, 0, 0.18);
   outline: none;
   transform: translateY(calc(14 * var(--u)));
   transition: transform 0.6s ease;
@@ -700,36 +698,83 @@ img {
   transform: translateY(0);
 }
 
-.newsletter-modal__title {
-  font-family: var(--sans);
-  font-weight: 300; /* Fustat Light */
-  font-size: calc(38 * var(--m));
-  line-height: calc(44 * var(--m));
-  margin-bottom: calc(15 * var(--m));
+/* Billedet til venstre med logoet nederst */
+.newsletter-modal__media {
+  position: relative;
+  overflow: hidden;
+}
+.newsletter-modal__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.newsletter-modal__logo {
+  position: absolute;
+  left: calc(60 * var(--m));
+  bottom: calc(24 * var(--m));
+  font-family: var(--logo); /* Marble Thin */
+  font-weight: 100;
+  font-size: calc(30 * var(--m));
+  line-height: 1;
+  color: #fff;
   white-space: nowrap;
 }
-.newsletter-modal__form label {
-  display: block;
-  font-size: calc(30 * var(--m));
-  line-height: calc(34 * var(--m));
+
+/* Indholdet til højre */
+.newsletter-modal__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: calc(67 * var(--m)) calc(21 * var(--m)) 0;
+  text-align: center;
+}
+.newsletter-modal__title {
+  font-family: var(--serif); /* Abhaya Libre Bold */
+  font-weight: 700;
+  font-size: calc(34 * var(--m));
+  line-height: calc(40 * var(--m));
+  margin-bottom: calc(9.5 * var(--m));
+}
+.newsletter-modal__text,
+.newsletter-modal__join {
+  font-size: calc(13 * var(--m));
+  line-height: calc(19 * var(--m));
   font-weight: 400; /* Fustat Regular */
-  margin-bottom: calc(11 * var(--m));
+}
+.newsletter-modal__text {
+  max-width: calc(370 * var(--m));
+  margin-bottom: calc(14 * var(--m));
+}
+.newsletter-modal__form {
+  width: 100%;
+  margin-top: calc(74.5 * var(--m));
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 .newsletter-modal__form input {
+  display: block;
   width: 100%;
-  height: calc(76 * var(--m));
-  padding: 0 calc(27 * var(--m));
-  background: #fff;
-  border: 1px solid #bdbdbd;
-  border-radius: calc(22 * var(--m));
+  height: calc(48 * var(--m));
+  padding: 0 calc(15 * var(--m));
+  background: transparent;
+  border: 1px solid var(--text);
+  border-radius: calc(2 * var(--m));
   font-family: var(--sans);
   font-weight: 300; /* Fustat Light */
-  font-size: calc(32 * var(--m));
+  font-size: calc(17 * var(--m));
   color: var(--text);
   outline: none;
 }
 .newsletter-modal__form input::placeholder {
-  color: #8d8d8d;
+  color: #b9b9b9;
   font-family: var(--sans);
   font-weight: 300;
 }
@@ -740,20 +785,21 @@ img {
 .newsletter-modal__submit {
   display: block;
   width: 100%;
-  height: calc(44 * var(--m));
-  margin-top: calc(21 * var(--m));
-  background: var(--olive);
-  border: 1px solid #7f7b34;
-  border-radius: calc(8 * var(--m));
+  height: calc(31 * var(--m));
+  margin-top: calc(20 * var(--m));
+  background: transparent;
+  border: 1px solid var(--text);
+  border-radius: calc(3 * var(--m));
   font-family: var(--sans);
-  font-weight: 300; /* Fustat Light */
-  font-size: calc(26 * var(--m));
-  color: var(--footer-text);
+  font-weight: 400; /* Fustat Regular */
+  font-size: calc(13 * var(--m));
+  text-transform: uppercase;
+  color: var(--text);
   cursor: pointer;
   transition: background 0.2s ease;
 }
 .newsletter-modal__submit:hover {
-  background: #868236;
+  background: rgba(0, 0, 0, 0.06);
 }
 .newsletter-modal__submit:focus-visible,
 .newsletter-modal__close:focus-visible {
@@ -761,11 +807,13 @@ img {
   outline-offset: 2px;
 }
 
-/* Krydset */
+/* Krydset (midten ligger 14 fra højre kant og 15 fra toppen) */
 .newsletter-modal__close {
   position: absolute;
-  top: calc(20 * var(--m));
-  right: calc(20 * var(--m));
+  z-index: 2;
+  top: calc(15 * var(--m));
+  right: calc(14 * var(--m));
+  transform: translate(50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -782,53 +830,76 @@ img {
   background: rgba(0, 0, 0, 0.06);
 }
 .newsletter-modal__close svg {
-  width: max(20px, calc(28 * var(--m)));
-  height: max(20px, calc(28 * var(--m)));
+  width: max(16px, calc(20 * var(--m)));
+  height: max(16px, calc(20 * var(--m)));
 }
 
-/* Mobil: samme opbygning, men i faste størrelser der kan læses på en telefon
-   (boksen er næsten lige så bred som skærmen). */
+/* Mobil: billedet øverst og indholdet under, i faste størrelser der kan læses
+   på en telefon. */
 @media (max-width: 749px) {
   .newsletter-modal__card {
     --w: min(calc(100vw - 32px), 460px);
-    padding: calc(56 * var(--u)) calc(24 * var(--u)) calc(28 * var(--u));
-    border-radius: calc(8 * var(--u));
-    box-shadow:
-      0 calc(5 * var(--u)) 0 #b9b9b9,
-      0 calc(10 * var(--u)) calc(24 * var(--u)) rgba(0, 0, 0, 0.16);
+    grid-template-columns: 1fr;
+    grid-template-rows: calc(150 * var(--u)) auto;
+    aspect-ratio: auto;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  .newsletter-modal__logo {
+    left: calc(20 * var(--u));
+    bottom: calc(14 * var(--u));
+    font-size: calc(26 * var(--u));
+  }
+  .newsletter-modal__content {
+    padding: calc(28 * var(--u)) calc(22 * var(--u)) calc(28 * var(--u));
   }
   .newsletter-modal__title {
-    font-size: calc(24 * var(--u));
-    line-height: calc(30 * var(--u));
-    margin-bottom: calc(18 * var(--u));
-    white-space: normal;
+    font-size: calc(30 * var(--u));
+    line-height: calc(36 * var(--u));
+    margin-bottom: calc(12 * var(--u));
   }
-  .newsletter-modal__form label {
-    font-size: calc(17 * var(--u));
+  .newsletter-modal__text,
+  .newsletter-modal__join {
+    font-size: calc(15 * var(--u));
     line-height: calc(22 * var(--u));
-    margin-bottom: calc(8 * var(--u));
+  }
+  .newsletter-modal__text {
+    max-width: none;
+    margin-bottom: calc(12 * var(--u));
+  }
+  .newsletter-modal__text br {
+    display: none;
+  }
+  .newsletter-modal__form {
+    margin-top: calc(24 * var(--u));
   }
   .newsletter-modal__form input {
     height: calc(52 * var(--u));
-    padding: 0 calc(18 * var(--u));
-    border-radius: calc(16 * var(--u));
+    padding: 0 calc(16 * var(--u));
+    border-radius: calc(3 * var(--u));
     font-size: max(16px, calc(17 * var(--u))); /* 16px forhindrer zoom i iOS */
   }
   .newsletter-modal__submit {
-    height: calc(46 * var(--u));
-    margin-top: calc(16 * var(--u));
-    border-radius: calc(8 * var(--u));
-    font-size: max(16px, calc(17 * var(--u)));
+    height: calc(44 * var(--u));
+    margin-top: calc(14 * var(--u));
+    border-radius: calc(4 * var(--u));
+    font-size: max(16px, calc(15 * var(--u)));
   }
   .newsletter-modal__close {
     top: calc(12 * var(--u));
     right: calc(12 * var(--u));
+    transform: none;
     width: max(40px, calc(40 * var(--u)));
     height: max(40px, calc(40 * var(--u)));
+    color: #fff;
+    background: rgba(0, 0, 0, 0.28);
+  }
+  .newsletter-modal__close:hover {
+    background: rgba(0, 0, 0, 0.4);
   }
   .newsletter-modal__close svg {
-    width: calc(24 * var(--u));
-    height: calc(24 * var(--u));
+    width: calc(20 * var(--u));
+    height: calc(20 * var(--u));
   }
 }
 
