@@ -226,7 +226,9 @@ img {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
-.products--shoes {
+/* Afstanden over skoene ligger på selve produktet, så hele kolonnen
+   (også den tomme plads over skoen) reagerer på hover. */
+.products--shoes .product {
   padding-top: calc(163 * var(--u));
 }
 .products--belts {
@@ -236,6 +238,7 @@ img {
 
 .product {
   display: block;
+  position: relative;
 }
 .product__img {
   height: calc(70 * var(--u));
@@ -243,32 +246,38 @@ img {
 }
 .product__img img {
   object-fit: contain;
-  transition:
-    transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-    filter 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-/* Hover: skoen/bæltet løftes lidt og får en blød skygge under sig.
-   Navn og pris står stille. Kun for mus (ikke touch) og tastatur-fokus. */
+
+/* Hover-billede på skoene øverst: et fotografi fader ind over hele
+   kolonnen (fra toppen af rækken og ned til lige over navnet).
+   Billederne ligger i HTML'en (class "product__hover"), så de er hentet
+   på forhånd og ikke blinker første gang. Navn og pris står stille.
+   Kun for mus (ikke touch) og tastatur-fokus. */
+.product__hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(273 * var(--u));
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
 @media (hover: hover) and (pointer: fine) {
-  .product:hover .product__img img {
-    transform: translateY(-6px) scale(1.03);
-    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.16));
+  .product:hover .product__hover {
+    opacity: 1;
   }
 }
-.product:focus-visible .product__img img {
-  transform: translateY(-6px) scale(1.03);
-  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.16));
+.product:focus-visible .product__hover {
+  opacity: 1;
 }
 .product:focus-visible {
   outline: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .product__img img {
+  .product__hover {
     transition: none;
-  }
-  .product:hover .product__img img,
-  .product:focus-visible .product__img img {
-    transform: none;
   }
 }
 /* Produktnavn og pris: Fustat SemiBold */
@@ -515,6 +524,13 @@ img {
   }
   .products--shoes {
     padding-top: calc(48 * var(--u));
+  }
+  .products--shoes .product {
+    padding-top: 0;
+  }
+  /* Ingen hover-billeder på mobil */
+  .product__hover {
+    display: none;
   }
   .products--belts {
     padding-top: calc(44 * var(--u));
