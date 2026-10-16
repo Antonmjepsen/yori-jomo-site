@@ -328,18 +328,20 @@ img {
   font-size: calc(30 * var(--u));
   letter-spacing: 0;
   line-height: 1.1;
-  margin-bottom: calc(16 * var(--u));
+  margin-bottom: calc(5 * var(--u));
 }
 /* Brødtekst: Fustat Regular */
 .split__text p {
-  font-size: calc(13 * var(--u));
+  font-size: calc(12 * var(--u));
   font-weight: 400;
-  line-height: calc(18.4 * var(--u));
-  max-width: calc(275 * var(--u));
-  margin-bottom: calc(17 * var(--u));
+  line-height: calc(17 * var(--u));
+  max-width: calc(335 * var(--u));
+  margin-bottom: calc(25 * var(--u));
 }
 .split__text .btn {
   align-self: flex-start;
+  width: calc(161 * var(--u));
+  height: calc(32 * var(--u));
 }
 
 .split--reverse .split__text {
@@ -347,8 +349,8 @@ img {
   padding-right: calc(24 * var(--u));
 }
 .split--reverse .split__text p {
-  max-width: calc(271 * var(--u));
-  margin-bottom: calc(18 * var(--u));
+  max-width: calc(335 * var(--u));
+  margin-bottom: calc(25 * var(--u));
 }
 .split--reverse .split__image {
   margin-left: calc(14 * var(--u));
@@ -360,8 +362,8 @@ img {
   background: var(--olive);
   color: var(--footer-text);
   margin: calc(37 * var(--u)) 0 0;
-  padding: calc(20 * var(--u)) calc(var(--gutter) + 22 * var(--u)) 0;
-  height: calc(272 * var(--u));
+  padding: calc(22 * var(--u)) calc(var(--gutter) + 24 * var(--u)) 0;
+  height: calc(300 * var(--u));
 }
 .footer__logo {
   font-family: var(--logo); /* Marble Thin */
@@ -374,51 +376,51 @@ img {
   display: grid;
   grid-template-columns: 299fr 277fr 288fr;
   align-items: start;
-  margin-top: calc(33 * var(--u));
+  margin-top: calc(30 * var(--u));
 }
-/* Footer-tekst følger brødteksten (13): links, "Connect with us" og label.
-   Fustat Regular. */
+/* Footer-tekst: Fustat Regular, 11,5 med 19 i linjeafstand.
+   Alle tre kolonner starter på samme linje. */
 .footer__links li {
-  font-size: calc(13 * var(--u));
+  font-size: calc(11.5 * var(--u));
   font-weight: 400;
-  line-height: calc(22 * var(--u));
+  line-height: calc(19 * var(--u));
 }
 .footer__connect {
-  padding-top: calc(88 * var(--u));
+  padding-top: 0;
 }
 .footer__connect p {
-  font-size: calc(13 * var(--u));
+  font-size: calc(11.5 * var(--u));
   font-weight: 400;
-  line-height: calc(22 * var(--u));
-  margin-bottom: calc(4 * var(--u));
+  line-height: calc(19 * var(--u));
+  margin-bottom: calc(2 * var(--u));
 }
 .footer__connect a {
   display: inline-flex;
 }
 .footer__connect svg {
-  width: calc(20 * var(--u));
-  height: calc(20 * var(--u));
+  width: calc(15 * var(--u));
+  height: calc(15 * var(--u));
 }
 .footer__news {
-  padding-top: calc(66 * var(--u));
+  padding-top: 0;
 }
 .footer__news label {
   display: block;
-  font-size: calc(13 * var(--u));
+  font-size: calc(11.5 * var(--u));
   font-weight: 400;
-  line-height: calc(22 * var(--u));
-  margin: 0 0 calc(8 * var(--u));
+  line-height: calc(19 * var(--u));
+  margin: 0 0 calc(2 * var(--u));
 }
 /* "your email": Fustat Light */
 .footer__news input {
   width: 100%;
-  height: calc(38 * var(--u));
+  height: calc(30 * var(--u));
   background: transparent;
   border: 1px solid var(--footer-text);
-  border-radius: calc(12 * var(--u));
-  padding: 0 calc(14 * var(--u));
+  border-radius: calc(2 * var(--u));
+  padding: 0 calc(13 * var(--u));
   font-family: var(--sans);
-  font-size: calc(13 * var(--u));
+  font-size: calc(11.5 * var(--u));
   font-weight: 300;
   color: var(--footer-text);
   outline: none;
@@ -431,9 +433,9 @@ img {
 
 .footer__copy {
   position: absolute;
-  left: calc(var(--gutter) + 22 * var(--u));
-  bottom: calc(20 * var(--u));
-  font-size: calc(11 * var(--u));
+  left: calc(var(--gutter) + 24 * var(--u));
+  bottom: calc(22 * var(--u));
+  font-size: calc(9.5 * var(--u));
   line-height: calc(15 * var(--u));
 }
 
@@ -579,6 +581,7 @@ img {
   .split__text .btn {
     align-self: stretch;
     width: 100%;
+    height: calc(44 * var(--u));
     max-width: calc(340 * var(--u));
   }
 
@@ -859,6 +862,188 @@ img {
   .reveal {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+}
+
+/* ==========================================================
+   MOBILMENU (burger)
+   Kun på mobil (under 750px). Burger-knappen sidder i menulinjen,
+   og menuen glider ind fra højre, når man trykker på den. Punkterne
+   følger efter ét ad gangen. Åbnes og lukkes af js/index.js.
+   ========================================================== */
+.nav__burger,
+.mobile-menu {
+  display: none;
+}
+.menu-open {
+  overflow: hidden;
+}
+
+@media (max-width: 749px) {
+  /* To tynde streger (burger-ikonet), både i menulinjen og i menuen */
+  .nav__burger,
+  .mobile-menu__close {
+    position: relative;
+    flex: none;
+    width: calc(27 * var(--u));
+    height: calc(29 * var(--u));
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav__burger {
+    display: block;
+    margin-left: calc(16 * var(--u));
+  }
+  /* Større trykflade end selve ikonet */
+  .nav__burger::after,
+  .mobile-menu__close::after {
+    content: "";
+    position: absolute;
+    inset: -12px;
+  }
+  .nav__burger span,
+  .mobile-menu__close span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 1px;
+  }
+  /* Burger-ikonet i menulinjen: 3 streger */
+  .nav__burger span:nth-child(1) {
+    top: 0;
+  }
+  .nav__burger span:nth-child(2) {
+    top: calc(50% - 0.75px);
+  }
+  .nav__burger span:nth-child(3) {
+    bottom: 0;
+  }
+  /* Lukkeknappen i menuen: 2 streger, der krydser hinanden (X) */
+  .mobile-menu__close span {
+    top: calc(50% - 0.75px);
+    width: 112%;
+    left: -6%;
+  }
+  .mobile-menu__close span:first-child {
+    transform: rotate(45deg);
+  }
+  .mobile-menu__close span:last-child {
+    transform: rotate(-45deg);
+  }
+  .nav__burger:focus-visible,
+  .mobile-menu__close:focus-visible {
+    outline: 1px solid currentColor;
+    outline-offset: 6px;
+  }
+
+  /* Selve menuen: olivengrøn flade, der glider ind fra højre */
+  .mobile-menu {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    overflow-y: auto;
+    background: var(--olive);
+    color: var(--footer-text);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition:
+      transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+      visibility 0s linear 0.7s;
+  }
+  .mobile-menu.is-open {
+    transform: none;
+    visibility: visible;
+    transition:
+      transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+      visibility 0s;
+  }
+  /* Samme placering som burger-knappen i menulinjen (64 høj, 20 fra kanten) */
+  .mobile-menu__close {
+    position: absolute;
+    top: calc(17.5 * var(--u));
+    right: calc(20 * var(--u));
+    color: var(--footer-text);
+  }
+
+  /* Menupunkter: store, lette bogstaver med en pil til højre */
+  .mobile-menu__list {
+    padding-top: calc(82 * var(--u));
+    padding-bottom: calc(40 * var(--u));
+  }
+  .mobile-menu__list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: calc(44 * var(--u));
+    padding: 0 calc(21 * var(--u)) 0 calc(32 * var(--u));
+    font-weight: 300; /* Fustat Light */
+    font-size: calc(21 * var(--u));
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+  .mobile-menu__list svg {
+    flex: none;
+    width: calc(9 * var(--u));
+    height: calc(17 * var(--u));
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
+    transition: transform 0.3s ease;
+  }
+  .mobile-menu__list a:focus-visible {
+    outline: 1px solid var(--footer-text);
+    outline-offset: -4px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .mobile-menu__list a:hover svg {
+      transform: translateX(calc(4 * var(--u)));
+    }
+  }
+
+  /* Punkterne kommer ind ét ad gangen, lidt efter at menuen er begyndt at glide */
+  .mobile-menu__list li {
+    opacity: 0;
+    transform: translateX(calc(24 * var(--u)));
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+  .mobile-menu.is-open .mobile-menu__list li {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.6s ease,
+      transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition-delay: calc(0.3s + var(--i) * 0.08s);
+  }
+  .mobile-menu__list li:nth-child(1) {
+    --i: 0;
+  }
+  .mobile-menu__list li:nth-child(2) {
+    --i: 1;
+  }
+  .mobile-menu__list li:nth-child(3) {
+    --i: 2;
+  }
+  .mobile-menu__list li:nth-child(4) {
+    --i: 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu,
+  .mobile-menu.is-open,
+  .mobile-menu__list li,
+  .mobile-menu.is-open .mobile-menu__list li,
+  .mobile-menu__list svg {
     transition: none;
   }
 }

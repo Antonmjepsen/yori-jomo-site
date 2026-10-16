@@ -43,6 +43,11 @@
           </svg>
         </a>
       </div>
+      <button type="button" class="nav__burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
     <div class="hero__content">
       <p class="hero__text">Shoes handcrafted in Italy. Designed in Copenhagen.</p>
@@ -165,7 +170,31 @@
     <p class="footer__copy">© 2026 Yori Jomo</p>
   </footer>
 
-  <!-- NYHEDSBREVS-POPUP (vises 2 sekunder efter sidens åbning, se js/index.js) -->
+  <!-- MOBILMENU (kun på mobil, se index.js) -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <button type="button" class="mobile-menu__close" aria-label="Luk menu">
+      <span></span>
+      <span></span>
+    </button>
+    <nav aria-label="Hovedmenu">
+      <ul class="mobile-menu__list">
+        <li><a href="#"><span>Shop</span><svg viewBox="0 0 10 18" aria-hidden="true">
+              <path d="M1 1l8 8-8 8" />
+            </svg></a></li>
+        <li><a href="#about"><span>About us</span><svg viewBox="0 0 10 18" aria-hidden="true">
+              <path d="M1 1l8 8-8 8" />
+            </svg></a></li>
+        <li><a href="#retailers"><span>Retailers</span><svg viewBox="0 0 10 18" aria-hidden="true">
+              <path d="M1 1l8 8-8 8" />
+            </svg></a></li>
+        <li><a href="#footer"><span>Contact</span><svg viewBox="0 0 10 18" aria-hidden="true">
+              <path d="M1 1l8 8-8 8" />
+            </svg></a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- NYHEDSBREVS-POPUP (vises 2 sekunder efter sidens åbning, se css/index.js) -->
   <div class="newsletter-modal" id="newsletter-modal" aria-hidden="true">
     <div class="newsletter-modal__card" role="dialog" aria-modal="true" aria-labelledby="newsletter-title"
       tabindex="-1">
