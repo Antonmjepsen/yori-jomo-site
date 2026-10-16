@@ -350,7 +350,7 @@ img {
   position: relative;
   background: var(--olive);
   color: var(--footer-text);
-  margin: calc(37 * var(--u)) 0 calc(28 * var(--u));
+  margin: calc(37 * var(--u)) 0 0;
   padding: calc(20 * var(--u)) calc(var(--gutter) + 22 * var(--u)) 0;
   height: calc(301 * var(--u));
 }
