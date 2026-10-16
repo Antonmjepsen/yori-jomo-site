@@ -330,10 +330,10 @@ img {
   line-height: 1.1;
   margin-bottom: calc(16 * var(--u));
 }
-/* Brødtekst: Fustat SemiBold */
+/* Brødtekst: Fustat Regular */
 .split__text p {
   font-size: calc(13 * var(--u));
-  font-weight: 600;
+  font-weight: 400;
   line-height: calc(18.4 * var(--u));
   max-width: calc(275 * var(--u));
   margin-bottom: calc(17 * var(--u));
