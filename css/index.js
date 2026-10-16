@@ -184,3 +184,87 @@
     { passive: true },
   );
 })();
+
+/* ==========================================================
+   Mobilmenu (burger)
+   Burger-knappen i menulinjen åbner menuen, som glider ind fra højre
+   (animationen ligger i css/index.css under "MOBILMENU").
+   Menuen lukkes med knappen i menuen, med Escape, ved tryk på et
+   menupunkt, eller hvis vinduet bliver bredt nok til den almindelige menu.
+   ========================================================== */
+(function () {
+  "use strict";
+
+  var menu = document.getElementById("mobile-menu");
+  var openButton = document.querySelector(".nav__burger");
+  if (!menu || !openButton) return;
+
+  var closeButton = menu.querySelector(".mobile-menu__close");
+  var links = menu.querySelectorAll("a");
+
+  function isOpen() {
+    return menu.classList.contains("is-open");
+  }
+
+  function openMenu() {
+    menu.classList.add("is-open");
+    menu.setAttribute("aria-hidden", "false");
+    openButton.setAttribute("aria-expanded", "true");
+    document.body.classList.add("menu-open");
+    closeButton.focus({ preventScroll: true });
+  }
+
+  function closeMenu(restoreFocus) {
+    menu.classList.remove("is-open");
+    menu.setAttribute("aria-hidden", "true");
+    openButton.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("menu-open");
+    if (restoreFocus) openButton.focus({ preventScroll: true });
+  }
+
+  openButton.addEventListener("click", openMenu);
+
+  closeButton.addEventListener("click", function () {
+    closeMenu(true);
+  });
+
+  // Tryk på et menupunkt: luk menuen, og lad browseren scrolle til sektionen
+  Array.prototype.forEach.call(links, function (link) {
+    link.addEventListener("click", function () {
+      closeMenu(false);
+    });
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (!isOpen()) return;
+
+    if (event.key === "Escape") {
+      closeMenu(true);
+      return;
+    }
+
+    // Tab holdes inde i menuen, mens den er åben
+    if (event.key === "Tab") {
+      var first = closeButton;
+      var last = links[links.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  // Bliver vinduet bredt nok til den almindelige menu, lukkes mobilmenuen
+  var desktopQuery = window.matchMedia("(min-width: 750px)");
+  function onResize(event) {
+    if (event.matches && isOpen()) closeMenu(false);
+  }
+  if (desktopQuery.addEventListener) {
+    desktopQuery.addEventListener("change", onResize);
+  } else if (desktopQuery.addListener) {
+    desktopQuery.addListener(onResize);
+  }
+})();
