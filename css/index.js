@@ -155,4 +155,32 @@
   items.forEach(function (el) {
     observer.observe(el);
   });
+
+  // Sikkerhedsnet: springer man hurtigt forbi et element (fx med et link til
+  // #footer eller Ctrl + End), melder observeren aldrig, at det var synligt,
+  // og så bliver det stående usynligt. Her vises alt, der ligger over
+  // vinduet, med det samme.
+  var checking = false;
+
+  function revealSkipped() {
+    checking = false;
+    items.forEach(function (el) {
+      if (el.classList.contains("reveal") && !el.classList.contains("is-visible") && el.getBoundingClientRect().bottom < 0) {
+        el.style.transitionDelay = "0ms";
+        observer.unobserve(el);
+        show(el);
+      }
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!checking) {
+        checking = true;
+        window.requestAnimationFrame(revealSkipped);
+      }
+    },
+    { passive: true },
+  );
 })();
