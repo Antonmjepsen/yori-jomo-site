@@ -9,7 +9,7 @@
    - Tablet (750-908px):    --u = 1px. Samme layout som Figma, men tekst og
                             knapper bliver ikke mindre end i designet.
    - Mobil (under 750px):   eget stablet layout. Her er --u skærmbredde / 390,
-                            begrænset til 0.9px-1.5px, så alt (tekst, knapper,
+                            begrænset til 0.9px-1.1px, så alt (tekst, knapper,
                             afstande) skalerer sammen fra små telefoner til
                             store telefoner og små tablets.
    ========================================================== */
@@ -361,12 +361,12 @@ img {
   color: var(--footer-text);
   margin: calc(37 * var(--u)) 0 0;
   padding: calc(20 * var(--u)) calc(var(--gutter) + 22 * var(--u)) 0;
-  height: calc(301 * var(--u));
+  height: calc(272 * var(--u));
 }
 .footer__logo {
   font-family: var(--logo); /* Marble Thin */
-  font-size: calc(25 * var(--u));
-  line-height: calc(30 * var(--u));
+  font-size: calc(20 * var(--u));
+  line-height: calc(24 * var(--u));
   font-weight: 100;
 }
 /* 299 : 277 : 288 = Figma-kolonnerne. fr gør, at de følger bredden. */
@@ -374,50 +374,51 @@ img {
   display: grid;
   grid-template-columns: 299fr 277fr 288fr;
   align-items: start;
-  margin-top: calc(35 * var(--u));
+  margin-top: calc(33 * var(--u));
 }
-/* Footer-links, "Connect with us" og nyhedsbrevs-label: Fustat Regular */
+/* Footer-tekst følger brødteksten (13): links, "Connect with us" og label.
+   Fustat Regular. */
 .footer__links li {
-  font-size: calc(17.5 * var(--u));
+  font-size: calc(13 * var(--u));
   font-weight: 400;
-  line-height: calc(25.5 * var(--u));
+  line-height: calc(22 * var(--u));
 }
 .footer__connect {
-  padding-top: calc(96 * var(--u));
+  padding-top: calc(88 * var(--u));
 }
 .footer__connect p {
-  font-size: calc(17.5 * var(--u));
+  font-size: calc(13 * var(--u));
   font-weight: 400;
-  line-height: calc(24 * var(--u));
-  margin-bottom: calc(5 * var(--u));
+  line-height: calc(22 * var(--u));
+  margin-bottom: calc(4 * var(--u));
 }
 .footer__connect a {
   display: inline-flex;
 }
 .footer__connect svg {
-  width: calc(22 * var(--u));
-  height: calc(22 * var(--u));
+  width: calc(20 * var(--u));
+  height: calc(20 * var(--u));
 }
 .footer__news {
-  padding-top: calc(72 * var(--u));
+  padding-top: calc(66 * var(--u));
 }
 .footer__news label {
   display: block;
-  font-size: calc(17.5 * var(--u));
+  font-size: calc(13 * var(--u));
   font-weight: 400;
-  line-height: calc(24 * var(--u));
-  margin: 0 0 calc(9 * var(--u));
+  line-height: calc(22 * var(--u));
+  margin: 0 0 calc(8 * var(--u));
 }
 /* "your email": Fustat Light */
 .footer__news input {
   width: 100%;
-  height: calc(42 * var(--u));
+  height: calc(38 * var(--u));
   background: transparent;
   border: 1px solid var(--footer-text);
   border-radius: calc(12 * var(--u));
-  padding: 0 calc(16 * var(--u));
+  padding: 0 calc(14 * var(--u));
   font-family: var(--sans);
-  font-size: calc(17.5 * var(--u));
+  font-size: calc(13 * var(--u));
   font-weight: 300;
   color: var(--footer-text);
   outline: none;
@@ -432,33 +433,25 @@ img {
   position: absolute;
   left: calc(var(--gutter) + 22 * var(--u));
   bottom: calc(20 * var(--u));
-  font-size: calc(11.5 * var(--u));
+  font-size: calc(11 * var(--u));
   line-height: calc(15 * var(--u));
 }
 
 /* ==========================================================
    TABLET (750px - 908px)
-   Samme layout som Figma. --u er 1px, men kolonnerne i footeren
-   er smallere end i designet, så skriften her er en anelse mindre.
+   Samme layout som Figma. --u er 1px, så tekst og knapper
+   bliver ikke mindre end i designet.
    ========================================================== */
-@media (min-width: 750px) and (max-width: 908px) {
-  .footer__links li,
-  .footer__connect p,
-  .footer__news label,
-  .footer__news input {
-    font-size: 15px;
-  }
-}
 
 /* ==========================================================
    MOBIL (under 750px)
    Egen stablet opsætning. Alle mål er i --u, som her er
-   skærmbredde / 390 (mellem 0.9px og 1.5px), så tekst, knapper
+   skærmbredde / 390 (mellem 0.9px og 1.1px), så tekst, knapper
    og afstande skalerer sammen. 1u svarer til 1px på en 390px telefon.
    ========================================================== */
 @media (max-width: 749px) {
   :root {
-    --u: clamp(0.9px, calc(100vw / 390), 1.5px);
+    --u: clamp(0.9px, calc(100vw / 390), 1.1px);
   }
 
   /* Hero: stående format. Billedet er beregnet til liggende, så det
@@ -595,47 +588,48 @@ img {
     padding: calc(32 * var(--u)) calc(20 * var(--u)) calc(28 * var(--u));
     height: auto;
   }
+  /* Footer-tekst følger brødteksten på mobil (14) */
   .footer__logo {
-    font-size: calc(26 * var(--u));
-    line-height: calc(32 * var(--u));
+    font-size: calc(22 * var(--u));
+    line-height: calc(28 * var(--u));
   }
   .footer__grid {
     grid-template-columns: 1fr;
-    gap: calc(32 * var(--u));
-    margin-top: calc(28 * var(--u));
+    gap: calc(30 * var(--u));
+    margin-top: calc(26 * var(--u));
   }
   .footer__links li {
-    font-size: calc(16 * var(--u));
-    line-height: calc(28 * var(--u));
+    font-size: calc(14 * var(--u));
+    line-height: calc(26 * var(--u));
   }
   .footer__connect,
   .footer__news {
     padding-top: 0;
   }
   .footer__connect p {
-    font-size: calc(16 * var(--u));
-    line-height: calc(24 * var(--u));
+    font-size: calc(14 * var(--u));
+    line-height: calc(22 * var(--u));
     margin-bottom: calc(8 * var(--u));
   }
   .footer__connect svg {
-    width: calc(24 * var(--u));
-    height: calc(24 * var(--u));
+    width: calc(22 * var(--u));
+    height: calc(22 * var(--u));
   }
   .footer__news label {
-    font-size: calc(16 * var(--u));
-    line-height: calc(24 * var(--u));
+    font-size: calc(14 * var(--u));
+    line-height: calc(22 * var(--u));
     margin-bottom: calc(10 * var(--u));
   }
   .footer__news input {
-    height: calc(46 * var(--u));
+    height: calc(44 * var(--u));
     border-radius: calc(12 * var(--u));
     padding: 0 calc(16 * var(--u));
-    font-size: max(16px, calc(16 * var(--u))); /* 16px forhindrer zoom i iOS */
+    font-size: max(16px, calc(14 * var(--u))); /* mindst 16px forhindrer zoom i iOS */
   }
   .footer__copy {
     position: static;
-    margin-top: calc(32 * var(--u));
-    font-size: calc(12 * var(--u));
+    margin-top: calc(30 * var(--u));
+    font-size: calc(11 * var(--u));
     line-height: calc(16 * var(--u));
   }
 }
